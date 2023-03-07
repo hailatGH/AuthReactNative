@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AuthReactNative",
-    "slug": "AuthReactNative",
+    "slug": "authreactnative",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0324d782-41c1-4614-b502-8af34e700762"
+      }
+    },
+    "owner": "hailatgh"
   }
 }
