@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "141230385652",
+    "project_id": "authreactnative-e319f",
+    "storage_bucket": "authreactnative-e319f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141230385652:android:2da871b1085897e45771a1",
+        "android_client_info": {
+          "package_name": "com.hailatgh.authreactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141230385652-csr8tubojln2fft6faab1043f4tscmen.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hailatgh.authreactnative",
+            "certificate_hash": "29af17058795801471d7b2ed6ec03b7d0fa17c8f"
+          }
+        },
+        {
+          "client_id": "141230385652-f4t5v2gt01kklva56t45sa4jgf902s67.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hailatgh.authreactnative",
+            "certificate_hash": "80e25362a5cdbbaa92056bdd91ab4812e373d52d"
+          }
+        },
+        {
+          "client_id": "141230385652-tlno577ic8395cjhbv21pbunm9g82kjl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZPajI82z5ZfejGhAPT_znOuvpZEhRdwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "141230385652-tlno577ic8395cjhbv21pbunm9g82kjl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
