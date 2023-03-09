@@ -3,6 +3,11 @@
     "version": ">= 3.7.2"
   },
   "build": {
+    "android_apk": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal",
