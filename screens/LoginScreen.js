@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import {
@@ -10,11 +10,19 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+// import { useUser, useUpdateUser } from "../context";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  // const user = useUser();
+  // const updateUser = useUpdateUser();
+
+  // useEffect(() => {
+  //   updateUser(email);
+  // }, [email]);
 
   const handleLoginBtn = () => {
     navigation.navigate("Main");

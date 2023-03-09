@@ -9,8 +9,12 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
+// import { useUser } from "../context";
+
 export default function AccountsScreen() {
   const navigation = useNavigation();
+  // const user = useUser();
+  // console.log(user);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.head}>
