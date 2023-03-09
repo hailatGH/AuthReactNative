@@ -1,5 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 import {
   View,
@@ -10,18 +12,69 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { useUser, useUpdateUser } from "../context";
 
 export default function LoginScreen() {
-  const navigation = useNavigation();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [initializing, setInitializing] = useState(true);
 
-  const handleLoginBtn = () => {
-    navigation.navigate("Main");
+  const navigation = useNavigation();
+  const setUser = useUpdateUser();
+
+  GoogleSignin.configure({
+    webClientId:
+      "141230385652-tlno577ic8395cjhbv21pbunm9g82kjl.apps.googleusercontent.com",
+  });
+
+  const onAuthStateChanged = (user) => {
+    setUser(user);
+    if (initializing) setInitializing(false);
   };
 
-  const handleGoogleBtn = () => {
-    console.log("Google");
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  const handleLoginBtn = () => {
+    if (email && password) {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          setEmail();
+          setPassword();
+          navigation.replace("Main");
+        })
+        .catch((error) => {
+          if (error.code === "auth/email-already-in-use") {
+            console.log("That email address is already in use!");
+          }
+
+          if (error.code === "auth/invalid-email") {
+            console.log("That email address is invalid!");
+          }
+
+          console.error(error);
+        });
+    } else {
+      console.log("Credentilas Not Provided");
+    }
+  };
+
+  const handleGoogleBtn = async () => {
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    const { idToken } = await GoogleSignin.signIn();
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    const user_sign_in = auth().signInWithCredential(googleCredential);
+    user_sign_in
+      .then(() => {
+        console.log("Logged IN");
+        navigation.replace("Main");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleFacebookBtn = () => {
@@ -30,10 +83,6 @@ export default function LoginScreen() {
 
   const handlePhoneBtn = () => {
     console.log("Phone");
-  };
-
-  const handleRegisterBtn = () => {
-    navigation.navigate("Register");
   };
 
   return (
@@ -66,31 +115,24 @@ export default function LoginScreen() {
           <Text style={styles.loginBtnText}>LOG IN</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.socailAuthWraper}>
-        <TouchableOpacity onPress={handleGoogleBtn}>
-          <Image
-            style={styles.socailBtn}
-            source={require("../assets/google-logo.png")}
-          />
-        </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleFacebookBtn}>
-          <Image
-            style={styles.socailBtn}
-            source={require("../assets/facebook-logo.png")}
-          />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.socailBtnWraper}
+        onPress={handleGoogleBtn}
+      >
+        <Image
+          style={styles.socailBtn}
+          source={require("../assets/google-logo.png")}
+        />
+        <Text style={styles.btnText}>Google Sign In</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={handlePhoneBtn}>
-          <Image
-            style={styles.socailBtn}
-            source={require("../assets/phone-flat.png")}
-          />
-        </TouchableOpacity>
-      </View>
       <Text style={styles.infoText}>
         Don't have an account?{" "}
-        <Text style={styles.infoSubText} onPress={handleRegisterBtn}>
+        <Text
+          style={styles.infoSubText}
+          onPress={() => navigation.navigate("Register")}
+        >
           REGISTER
         </Text>
       </Text>
@@ -134,15 +176,24 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     fontSize: 18,
   },
-  socailAuthWraper: {
+  socailBtnWraper: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
     width: "80%",
+    height: 40,
     marginTop: 20,
+    borderWidth: 1,
+    borderColor: "#BEBEBE",
+    borderRadius: 5,
+    alignItems: "center",
+    gap: 10,
   },
   socailBtn: {
-    width: 50,
-    height: 50,
+    width: 28,
+    height: 28,
+  },
+  btnText: {
+    fontSize: 18,
   },
   infoText: {
     marginTop: 20,

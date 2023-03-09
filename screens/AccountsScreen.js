@@ -8,13 +8,22 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
-// import { useUser } from "../context";
+import { useUser } from "../context";
 
 export default function AccountsScreen() {
   const navigation = useNavigation();
-  // const user = useUser();
-  // console.log(user);
+  const user = useUser();
+
+  const handleLogout = async () => {
+    if (GoogleSignin.isSignedIn) GoogleSignin.revokeAccess;
+    await auth()
+      .signOut()
+      .then(() => navigation.replace("Auth"))
+      .catch((error) => console.log(error));
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.head}>
@@ -29,20 +38,19 @@ export default function AccountsScreen() {
       <View style={styles.headingWraper}>
         <View style={styles.profileWraper}>
           <View style={styles.imageWraper}>
-            <Image
-              style={styles.image}
-              source={require("../assets/google-logo.png")}
-            />
+            {user?.photoURL && (
+              <Image style={styles.image} source={{ uri: user.photoURL }} />
+            )}
           </View>
           <View style={styles.userInfoWraper}>
-            <Text style={styles.userName}>Hailemichael Atrsaw</Text>
-            <Text style={styles.userEmail}>hailebest.b@gmail.com</Text>
+            {user?.displayName && (
+              <Text style={styles.userName}>{user.displayName}</Text>
+            )}
+
+            <Text style={styles.userEmail}>{user?.email}</Text>
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.logoutWraper}
-          onPress={() => navigation.navigate("Auth")}
-        >
+        <TouchableOpacity style={styles.logoutWraper} onPress={handleLogout}>
           <MaterialIcons name="logout" size={28} color="#BEBEBE" />
         </TouchableOpacity>
       </View>
@@ -95,6 +103,7 @@ const styles = StyleSheet.create({
   image: {
     width: 70,
     height: 70,
+    borderRadius: 35,
   },
   userInfoWraper: {},
   userName: {
