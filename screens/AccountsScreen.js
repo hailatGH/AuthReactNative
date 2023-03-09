@@ -17,9 +17,13 @@ export default function AccountsScreen() {
   const navigation = useNavigation();
   const user = useUser();
 
+  console.log(GoogleSignin.isSignedIn());
+
   const handleLogout = async () => {
-    if (GoogleSignin.isSignedIn) GoogleSignin.revokeAccess;
-    await auth()
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    if (isSignedIn) GoogleSignin.revokeAccess();
+
+    auth()
       .signOut()
       .then(() => navigation.replace("Auth"))
       .catch((error) => console.log(error));

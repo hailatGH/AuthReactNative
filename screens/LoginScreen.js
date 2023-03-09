@@ -20,6 +20,7 @@ export default function LoginScreen() {
   const [initializing, setInitializing] = useState(true);
 
   const navigation = useNavigation();
+  const user = useUser();
   const setUser = useUpdateUser();
 
   GoogleSignin.configure({
@@ -30,6 +31,7 @@ export default function LoginScreen() {
   const onAuthStateChanged = (user) => {
     setUser(user);
     if (initializing) setInitializing(false);
+    if (user) navigation.replace("Main");
   };
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function LoginScreen() {
         .then(() => {
           setEmail();
           setPassword();
-          navigation.replace("Main");
+          // navigation.replace("Main");
         })
         .catch((error) => {
           if (error.code === "auth/email-already-in-use") {
@@ -70,7 +72,7 @@ export default function LoginScreen() {
     user_sign_in
       .then(() => {
         console.log("Logged IN");
-        navigation.replace("Main");
+        // navigation.replace("Main");
       })
       .catch((error) => {
         console.log(error);
