@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   View,
@@ -11,12 +12,12 @@ import {
 } from "react-native";
 
 export default function LoginScreen() {
+  const navigation = useNavigation();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const handleLoginBtn = () => {
-    console.log(email);
-    console.log(password);
+    navigation.navigate("Main");
   };
 
   const handleGoogleBtn = () => {
@@ -32,12 +33,12 @@ export default function LoginScreen() {
   };
 
   const handleRegisterBtn = () => {
-    console.log("Register");
+    navigation.navigate("Register");
   };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.pageHeader}>WELCOME</Text>
+      <Text style={styles.pageHeader}>SIGN IN</Text>
       <View style={styles.textInputWraper}>
         <TextInput
           style={styles.textInput}
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   loginBtnText: {
-    fontWeight: 900,
+    fontWeight: 600,
     fontSize: 18,
   },
   socailAuthWraper: {

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   View,
@@ -11,14 +12,13 @@ import {
 } from "react-native";
 
 export default function RegisterScreen() {
+  const navigation = useNavigation();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
   const handleRegisterBtn = () => {
-    console.log(email);
-    console.log(password);
-    console.log(confirmPassword);
+    navigation.navigate("Home");
   };
 
   const handleGoogleBtn = () => {
@@ -34,12 +34,12 @@ export default function RegisterScreen() {
   };
 
   const handleLogInBtn = () => {
-    console.log("Login");
+    navigation.navigate("Login");
   };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.pageHeader}>REGISTER</Text>
+      <Text style={styles.pageHeader}>SIGN UP</Text>
       <View style={styles.textInputWraper}>
         <TextInput
           style={styles.textInput}
@@ -74,7 +74,7 @@ export default function RegisterScreen() {
           style={styles.loginBtnWraper}
           onPress={handleRegisterBtn}
         >
-          <Text style={styles.handleRegisterBtn}>REGISTER</Text>
+          <Text style={styles.loginBtnText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.socailAuthWraper}>
@@ -102,7 +102,7 @@ export default function RegisterScreen() {
       <Text style={styles.infoText}>
         Already have an account?{" "}
         <Text style={styles.infoSubText} onPress={handleLogInBtn}>
-          LOG IN
+          SIGN IN
         </Text>
       </Text>
     </KeyboardAvoidingView>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   loginBtnText: {
-    fontWeight: 900,
+    fontWeight: 600,
     fontSize: 18,
   },
   socailAuthWraper: {
