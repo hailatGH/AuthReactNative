@@ -118,16 +118,28 @@ export default function LoginScreen() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={styles.socailBtnWraper}
-        onPress={handleGoogleBtn}
-      >
-        <Image
-          style={styles.socailBtn}
-          source={require("../assets/google-logo.png")}
-        />
-        <Text style={styles.btnText}>Google Sign In</Text>
-      </TouchableOpacity>
+      <View style={styles.socailAuthWraper}>
+        <TouchableOpacity onPress={handleGoogleBtn}>
+          <Image
+            style={styles.socailBtn}
+            source={require("../assets/google-logo.png")}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleFacebookBtn}>
+          <Image
+            style={styles.socailBtn}
+            source={require("../assets/facebook-logo.png")}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handlePhoneBtn}>
+          <Image
+            style={styles.socailBtn}
+            source={require("../assets/phone-flat.png")}
+          />
+        </TouchableOpacity>
+      </View>
 
       <Text style={styles.infoText}>
         Don't have an account?{" "}
@@ -178,24 +190,15 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     fontSize: 18,
   },
-  socailBtnWraper: {
+  socailAuthWraper: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
     width: "80%",
-    height: 40,
     marginTop: 20,
-    borderWidth: 1,
-    borderColor: "#BEBEBE",
-    borderRadius: 5,
-    alignItems: "center",
-    gap: 10,
   },
   socailBtn: {
-    width: 28,
-    height: 28,
-  },
-  btnText: {
-    fontSize: 18,
+    width: 50,
+    height: 50,
   },
   infoText: {
     marginTop: 20,
