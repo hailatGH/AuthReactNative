@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { LoginManager, AccessToken } from "react-native-fbsdk-next";
 
 import {
   View,
@@ -79,8 +80,30 @@ export default function LoginScreen() {
       });
   };
 
-  const handleFacebookBtn = () => {
-    console.log("Facebook");
+  const handleFacebookBtn = async () => {
+    const result = await LoginManager.logInWithPermissions([
+      "public_profile",
+      "email",
+    ]);
+
+    if (result.isCancelled) {
+      throw "User cancelled the login process";
+    }
+
+    // Once signed in, get the users AccesToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw "Something went wrong obtaining access token";
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken
+    );
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(facebookCredential);
   };
 
   const handlePhoneBtn = () => {
@@ -126,7 +149,13 @@ export default function LoginScreen() {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleFacebookBtn}>
+        <TouchableOpacity
+          onPress={() =>
+            handleFacebookBtn()
+              .then(() => console.log("Signed in with Facebook!"))
+              .catch(() => console.log("Error"))
+          }
+        >
           <Image
             style={styles.socailBtn}
             source={require("../assets/facebook-logo.png")}

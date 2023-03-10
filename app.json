@@ -6,7 +6,17 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "plugins": ["@react-native-google-signin/google-signin"],
+    "plugins": ["@react-native-google-signin/google-signin", 
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "570733395010672",
+          "clientToken": "f475875a7c167459ac6b8dea1bcb8dc6",
+          "displayName": "AuthReactNative",
+          "scheme": "fb570733395010672"
+        }
+      ]
+    ],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
